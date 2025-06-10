@@ -40,7 +40,7 @@ public class SignUpAndLoginApiController {
 		
 		if(userInfo!=null) {
 		return userInfo;
-		}
+		} 
 		return null;
 		
 	}
