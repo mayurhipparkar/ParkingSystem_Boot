@@ -29,6 +29,7 @@ public class EnteredVehicleListController {
 	            @RequestParam(defaultValue = "0") int page,
 	            @RequestParam(defaultValue = "5") int size) {
 
+	    	System.out.println("hello java");
 	        Page<EnteredVehicleListRespDTO> vehiclePage = enteredVehicleListInterface.getVehiclesByType(vehicleType, page, size);
 
 	        Map<String, Object> response = new HashMap<>();
