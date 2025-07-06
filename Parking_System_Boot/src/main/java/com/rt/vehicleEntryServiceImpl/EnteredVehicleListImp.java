@@ -1,7 +1,6 @@
 package com.rt.vehicleEntryServiceImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,9 +21,18 @@ public class EnteredVehicleListImp implements EnteredVehicleListInterface{
 	private EnteredVehicleRepository enteredVehicleRepository;
 
 	@Override
-	public Page<EnteredVehicleListRespDTO> getVehiclesByType(String vehicleType, int page, int size) {
+	public Page<EnteredVehicleListRespDTO> getVehiclesByType(String vehicleType, String search, int page, int size,LocalDate entryDate) {
 		 Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
-	        Page<Vehicle> pagedResult = enteredVehicleRepository.findByVehicleType(vehicleType, pageable);
+	        Page<Vehicle> pagedResult=null; 
+	        
+	        if (search != null && !search.isEmpty()) {
+	        	 pagedResult=enteredVehicleRepository.findByVehicleTypeAndVehicleNumber(search,vehicleType,pageable);
+	        }else if(entryDate!=null){
+	        	 pagedResult=enteredVehicleRepository.findByVehicleTypeAndEntryDate(vehicleType,entryDate,pageable);
+	        	
+	        }else {
+	        	pagedResult=enteredVehicleRepository.findByVehicleType(vehicleType, pageable);
+	        }
 
 	        return pagedResult.map(vehicle -> new EnteredVehicleListRespDTO(
 	                vehicle.getId(),
@@ -35,6 +43,6 @@ public class EnteredVehicleListImp implements EnteredVehicleListInterface{
 	                vehicle.getEntryDate(),
 	                vehicle.getEntryTime()
 	        ));
-	    	}
+	    }
 
 }
