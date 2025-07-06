@@ -1,13 +1,13 @@
 package com.rt.vehicleEntryRepository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.rt.vehicleEntryEntity.AddVehicle;
+import com.rt.vehicleEntryEntity.Vehicle;
 
-public interface EnteredVehicleRepository extends JpaRepository<AddVehicle,Integer>{
-	 
-	List<AddVehicle> findAll();
+public interface EnteredVehicleRepository extends JpaRepository<Vehicle,Integer>{
+
+	Page<Vehicle> findByVehicleType(String vehicleType, Pageable pageable);
 
 }

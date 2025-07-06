@@ -1,11 +1,11 @@
 package com.rt.vehicleEntryServiceInterface;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
-import com.rt.vehicleEntryDTO.RespEnteredVehicleListDTO;
+import com.rt.vehicleEntryDTO.EnteredVehicleListRespDTO;
 
 public interface EnteredVehicleListInterface {
-	List<RespEnteredVehicleListDTO> twoWheelerList();
-	List<RespEnteredVehicleListDTO>  fourWheelerList();
 
+	Page<EnteredVehicleListRespDTO> getVehiclesByType(String vehicleType, int page, int size);
+	
 }
