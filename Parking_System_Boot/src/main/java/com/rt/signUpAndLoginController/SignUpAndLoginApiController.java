@@ -22,8 +22,8 @@ public class SignUpAndLoginApiController {
 	private SignUpImplementation signUpService;
 	
 	@PostMapping("/signup")
-	public boolean data(@RequestBody RequestSignUpDTO signUpDto) {
-		boolean userStatus=signUpService.addUser(signUpDto);
+	public String data(@RequestBody RequestSignUpDTO signUpDto) {
+		String userStatus=signUpService.addUser(signUpDto);
 		System.out.println(signUpDto.getFullname()+" "+signUpDto.getEmail()+" "+signUpDto.getNumber()+" "+signUpDto.getAddress()+" "+signUpDto.getPassword()+" "+signUpDto.getRole());
 		return userStatus;
 		

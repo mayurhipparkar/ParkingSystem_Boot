@@ -25,4 +25,5 @@ public class AddVehicleRequestDto {
 	private LocalTime entryTime;
 	 
 	 private int userId;
+	 private String userRole;
 }

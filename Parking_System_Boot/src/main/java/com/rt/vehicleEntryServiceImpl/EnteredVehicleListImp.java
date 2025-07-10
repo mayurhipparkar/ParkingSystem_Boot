@@ -21,28 +21,36 @@ public class EnteredVehicleListImp implements EnteredVehicleListInterface{
 	private EnteredVehicleRepository enteredVehicleRepository;
 
 	@Override
-	public Page<EnteredVehicleListRespDTO> getVehiclesByType(String vehicleType, String search, int page, int size,LocalDate entryDate) {
-		 Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
-	        Page<Vehicle> pagedResult=null; 
-	        
-	        if (search != null && !search.isEmpty()) {
-	        	 pagedResult=enteredVehicleRepository.findByVehicleTypeAndVehicleNumber(search,vehicleType,pageable);
-	        }else if(entryDate!=null){
-	        	 pagedResult=enteredVehicleRepository.findByVehicleTypeAndEntryDate(vehicleType,entryDate,pageable);
-	        	
-	        }else {
-	        	pagedResult=enteredVehicleRepository.findByVehicleType(vehicleType, pageable);
-	        }
+	public Page<EnteredVehicleListRespDTO> getVehiclesByType(String vehicleType, String search, int page, int size, LocalDate entryDate, int userId, String userRole) {
+	    Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+	    Page<Vehicle> pagedResult;
 
-	        return pagedResult.map(vehicle -> new EnteredVehicleListRespDTO(
-	                vehicle.getId(),
-	                vehicle.getVehicleType(),
-	                vehicle.getVehicleNumber(),
-	                vehicle.getOwnerName(),
-	                vehicle.getContactNumber(),
-	                vehicle.getEntryDate(),
-	                vehicle.getEntryTime()
-	        ));
+	    boolean isAdmin = "Admin".equalsIgnoreCase(userRole);
+
+	    if (search != null && !search.isEmpty()) {
+	        pagedResult = isAdmin
+	            ? enteredVehicleRepository.findByVehicleNumberAndVehicleType(vehicleType, search, pageable)
+	            : enteredVehicleRepository.findByVehicleTypeAndVehicleNumberAndUserId(vehicleType, search, userId, pageable);
+	    } else if (entryDate != null) {
+	        pagedResult = isAdmin
+	            ? enteredVehicleRepository.findByVehicleTypeAndEntryDate(vehicleType, entryDate, pageable)
+	            : enteredVehicleRepository.findByVehicleTypeAndEntryDateAndUserId(vehicleType, entryDate, userId, pageable);
+	    } else {
+	        pagedResult = isAdmin
+	            ? enteredVehicleRepository.findByVehicleType(vehicleType, pageable)
+	            : enteredVehicleRepository.findByVehicleTypeAndUserId(vehicleType, userId, pageable);
 	    }
+
+	    return pagedResult.map(vehicle -> new EnteredVehicleListRespDTO(
+	            vehicle.getId(),
+	            vehicle.getVehicleType(),
+	            vehicle.getVehicleNumber(),
+	            vehicle.getOwnerName(),
+	            vehicle.getContactNumber(),
+	            vehicle.getEntryDate(),
+	            vehicle.getEntryTime()
+	    ));
+	}
+
 
 }

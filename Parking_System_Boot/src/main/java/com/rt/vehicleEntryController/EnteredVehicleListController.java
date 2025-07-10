@@ -31,9 +31,11 @@ public class EnteredVehicleListController {
 	            @RequestParam(defaultValue = "0") int page,
 	            @RequestParam(defaultValue = "5") int size,
 	            @RequestParam(required = false) String search,
-	            @RequestParam(required = false)@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate entryDate) {
+	            @RequestParam(required = false)@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate entryDate,
+	            @RequestParam int userId,
+	            @RequestParam String userRole) {
 
-	        Page<EnteredVehicleListRespDTO> vehiclePage = enteredVehicleListInterface.getVehiclesByType(vehicleType,search,page, size,entryDate);
+	        Page<EnteredVehicleListRespDTO> vehiclePage = enteredVehicleListInterface.getVehiclesByType(vehicleType,search,page, size,entryDate,userId,userRole);
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("data", vehiclePage.getContent());
 	        response.put("currentPage", vehiclePage.getNumber());

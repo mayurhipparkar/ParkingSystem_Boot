@@ -12,15 +12,21 @@ import com.rt.vehicleEntryEntity.Vehicle;
 
 public interface EnteredVehicleRepository extends JpaRepository<Vehicle,Integer>{
 
-	Page<Vehicle> findByVehicleType(String vehicleType, Pageable pageable);
-	
-	@Query("SELECT v FROM Vehicle v " +
-		       "WHERE LOWER(v.vehicleNumber) LIKE LOWER(CONCAT('%', :vehicleNumber, '%')) " +
-		       "AND LOWER(v.vehicleType) LIKE LOWER(CONCAT('%', :vehicleType, '%'))")
-		Page<Vehicle> findByVehicleTypeAndVehicleNumber(@Param("vehicleNumber") String vehicleNumber,
-		                                                 @Param("vehicleType") String vehicleType,
-		                                                 Pageable pageable);
-
+	//this method only for admin.
+		Page<Vehicle> findByVehicleType(String vehicleType, Pageable pageable);
 		Page<Vehicle> findByVehicleTypeAndEntryDate(String vehicleType, LocalDate entryDate, Pageable pageable);
+		@Query("SELECT v FROM Vehicle v WHERE LOWER(v.vehicleNumber) LIKE LOWER(CONCAT('%', :vehicleNumber, '%')) AND LOWER(v.vehicleType) LIKE LOWER(CONCAT('%', :vehicleType, '%'))")
+			Page<Vehicle> findByVehicleNumberAndVehicleType(@Param("vehicleNumber") String vehicleNumber,
+				                                                 @Param("vehicleType") String vehicleType,
+				                                                 Pageable pageable);
+	
+		
+		//this methods are used for other roles.
+	 	Page<Vehicle> findByVehicleTypeAndUserId(String vehicleType, int userId, Pageable pageable);
+	    Page<Vehicle> findByVehicleTypeAndVehicleNumberAndUserId(String vehicleType, String vehicleNumber, int userId, Pageable pageable);
+	    Page<Vehicle> findByVehicleTypeAndEntryDateAndUserId(String vehicleType, LocalDate entryDate, int userId, Pageable pageable);
+	
+	   
+	
 
 }

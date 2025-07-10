@@ -24,10 +24,8 @@ public class AddVehicleMapper {
 	public Vehicle toEntity(AddVehicleRequestDto addVehicleReqDto) {
 		User user=null;
 		Optional<User> userData = loginRepo.findById(addVehicleReqDto.getUserId());
-		
 		if(userData.isPresent()) {
 		 user=userData.get();
-			
 		}
 		return new Vehicle(addVehicleReqDto.getVehicleType(),addVehicleReqDto.getVehicleNumber(),addVehicleReqDto.getOwnerName(),addVehicleReqDto.getContactNumber(),addVehicleReqDto.getEntryDate(),addVehicleReqDto.getEntryTime(),user);
 		

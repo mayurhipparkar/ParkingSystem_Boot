@@ -22,6 +22,8 @@ public class VehicleEntryServiceImp implements VehicleEntryInterface{
 	public AddVehicleRespDto addVehicleInfo(AddVehicleRequestDto addVehicleReqDto) {
 		
 		Vehicle vehicleEntity=addVehicleMapper.toEntity(addVehicleReqDto);
+		System.out.println("foreign key User "+vehicleEntity.getUser().getEmail());
+		
 		Vehicle vehicleInfo=vehicleEntryRepo.save(vehicleEntity);
 		
 		AddVehicleRespDto vehicleRespDto=addVehicleMapper.toDTO(vehicleInfo);

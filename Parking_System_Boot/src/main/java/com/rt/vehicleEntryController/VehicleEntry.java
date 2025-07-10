@@ -26,13 +26,11 @@ public class VehicleEntry {
 	
 	@PostMapping("/addVehicle")
 	public AddVehicleRespDto addVehicleInfo(@RequestBody AddVehicleRequestDto addVehicleReqDto) {
-		System.out.println(addVehicleReqDto.getUserId()+" "+addVehicleReqDto.getVehicleNumber()+" "+addVehicleReqDto.getEntryDate()+" "+addVehicleReqDto.getEntryTime());
+		System.out.println(addVehicleReqDto.getUserId()+" "+addVehicleReqDto.getUserRole()+" "+addVehicleReqDto.getVehicleNumber()+" "+addVehicleReqDto.getEntryDate()+" "+addVehicleReqDto.getEntryTime());
 		AddVehicleRespDto respDto=vehicleEntryInterface.addVehicleInfo(addVehicleReqDto);
-		
 		return respDto;
 		
 	}
-
 	
 	@GetMapping("/fetchVehicleInfo")
 	public FetchVehicleInfoRespDto getInfoById(@RequestParam int id) {

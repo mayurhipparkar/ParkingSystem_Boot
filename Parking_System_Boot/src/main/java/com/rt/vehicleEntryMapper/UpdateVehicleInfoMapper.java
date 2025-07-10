@@ -24,7 +24,7 @@ public class UpdateVehicleInfoMapper {
 	
 	public Vehicle toEntity(UpdateVehicleInfoReqDto UpdateVehicleInfoReqDto) {
 		User user=null;
-		Optional<User> userData = loginRepo.findById(UpdateVehicleInfoReqDto.getUserId());
+		Optional<User> userData = loginRepo.findById(UpdateVehicleInfoReqDto.getSessionUserId());
 		
 		if(userData.isPresent()) {
 		 user=userData.get();

@@ -27,7 +27,7 @@ public class FetchVehicleInfoImp implements FetchVehicleInfoInterface{
 		if(optionalWrapper.isPresent()) {
 			Vehicle entityResponse=optionalWrapper.get();
 			FetchVehicleInfoRespDto fetchVehicleInfoRespDto =fetchVehicleInfoMapper.toDTO(entityResponse);
-			
+		
 			System.out.println("fetch id for update :"+fetchVehicleInfoRespDto.getId());
 			return fetchVehicleInfoRespDto;
 			

@@ -19,19 +19,11 @@ public class LoginServiceImplementation implements LoginServiceInterface{
 	@Override
 	public ResponseLoginDTO checkLogin(RequestLoginDTO reqLoginDto) {
 		Optional<ResponseLoginDTO> optional = loginRepo.loginUser(reqLoginDto.getEmail(),reqLoginDto.getPassword());
-		
 		if (optional.isPresent()) {
-			ResponseLoginDTO respLoginDto = optional.get();
-			
-// System.out.println("this is an optional interface which returning login value "+respLoginDto.getFullname());
-			
+			ResponseLoginDTO respLoginDto = optional.get();	
 			return respLoginDto;
 		}
-		
-		return null;
-		
-		
-		
+		return null;	
 	}
 	
 }

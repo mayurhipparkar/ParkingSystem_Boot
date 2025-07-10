@@ -40,7 +40,7 @@ public class Vehicle {
 	private String ownerName;
 	 
 	 @Column(name = "contact_number", nullable = false)
-	private String contactNumber;
+	 private String contactNumber;
 	
 	 @Column(name = "entry_date", nullable = false)
 	private LocalDate entryDate;
