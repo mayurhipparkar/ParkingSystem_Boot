@@ -4,12 +4,12 @@ package com.rt.signUpAndLoginRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.rt.signUpAndLoginEntity.User;
+import com.rt.userEntity.Users;
 
 @Repository
-public interface SignupRepositiry extends JpaRepository<User, Integer> {
+public interface SignupRepositiry extends JpaRepository<Users, Integer> {
 
-	User findByEmailAndRole(String email, String role);
+	Users findByEmailAndRole(String email, String role);
 
 	boolean existsByRoleIgnoreCase(String string);
 

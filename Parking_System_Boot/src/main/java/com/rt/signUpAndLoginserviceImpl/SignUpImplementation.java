@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rt.signUpAndLoginDTO.RequestSignUpDTO;
-import com.rt.signUpAndLoginEntity.User;
 import com.rt.signUpAndLoginMapper.SignUpAndUserMapper;
 import com.rt.signUpAndLoginRepository.SignupRepositiry;
 import com.rt.signUpAndLoginserviceInterface.SignUpInterface;
+import com.rt.userEntity.Users;
 
 @Service
 public class SignUpImplementation implements SignUpInterface{
@@ -17,36 +17,61 @@ public class SignUpImplementation implements SignUpInterface{
 	@Autowired
 	private SignUpAndUserMapper mapper;//Mapper class to convert DTO to Entity and vis versa.
  
+	//this is helper method which is used to convert lowercase role into first latter uppercase.
+	private String capitalizeFirstLetterOrDefaultGuard(String input) {
+	    if (input == null || input.trim().isEmpty()) {
+	        return "Guard"; 
+	    }
+	    return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+	}
+
 	@Override
 	public String addUser(RequestSignUpDTO signUpDto) { 
-	    User user=mapper.toEntity(signUpDto);//converting to DTO to Entity.
+		String inputRole = signUpDto.getRole();
 
-	    if ("Admin".equalsIgnoreCase( signUpDto.getRole())) {
-	        // Check if any Admin exists already
+	    //Check if role is Admin or Guard only
+	    if (!"Admin".equalsIgnoreCase(inputRole) && !"Guard".equalsIgnoreCase(inputRole)) {
+	        return "Only roles 'Admin' and 'Guard' are allowed.";
+	    }
+
+	    //first letter uppercase, rest lowercase
+	    String convertedRole = capitalizeFirstLetterOrDefaultGuard(inputRole);
+	    signUpDto.setRole(convertedRole);
+
+	    //Convert DTO to Entity
+	    Users users = mapper.toEntity(signUpDto);
+	  
+	    // default status
+	    if(users.getStatus()==null) {
+	    	 users.setStatus("Active");
+	    }
+
+	    //Handle Admin registration
+	    if ("Admin".equalsIgnoreCase(convertedRole)) {
 	        boolean adminExists = userRepo.existsByRoleIgnoreCase("Admin");
 
 	        if (adminExists) {
-	            // check if same email with admin role.
-	            User existing = userRepo.findByEmailAndRole(signUpDto.getEmail(), "Admin");
+	            Users existing = userRepo.findByEmailAndRole(signUpDto.getEmail(), "Admin");
 	            if (existing != null) {
 	                return "Admin already exists with this email.";
 	            }
 	            return "Only one Admin allowed.";
 	        }
 
-	        // No admin found,save new admin.
-	        userRepo.save(user);
-	        return "Admin registered successfully,now able to login.";
-	    } else {
-	        // For non-admin roles, check only email
+	        userRepo.save(users);
+	        return "Admin registered successfully, now able to login.";
+	    }
+
+	    //Handle Guard registration
+	    else {
 	        boolean emailExists = userRepo.existsByEmailIgnoreCase(signUpDto.getEmail());
 
 	        if (emailExists) {
 	            return "Email already exists.";
 	        }
-	        // save user
-	        userRepo.save(user);
-	        return "User registered successfully,now able to login.";
+
+	        userRepo.save(users);
+	        return "Guard registered successfully, now able to login.";
 	    }
 	}
 

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.rt.signUpAndLoginEntity.User;
 import com.rt.signUpAndLoginRepository.LoginRepository;
+import com.rt.userEntity.Users;
 import com.rt.vehicleEntryDTO.AddVehicleRequestDto;
 import com.rt.vehicleEntryDTO.AddVehicleRespDto;
 import com.rt.vehicleEntryEntity.Vehicle;
@@ -22,12 +22,12 @@ public class AddVehicleMapper {
 	}
 	
 	public Vehicle toEntity(AddVehicleRequestDto addVehicleReqDto) {
-		User user=null;
-		Optional<User> userData = loginRepo.findById(addVehicleReqDto.getUserId());
+		Users users=null;
+		Optional<Users> userData = loginRepo.findById(addVehicleReqDto.getUserId());
 		if(userData.isPresent()) {
-		 user=userData.get();
+		 users=userData.get();
 		}
-		return new Vehicle(addVehicleReqDto.getVehicleType(),addVehicleReqDto.getVehicleNumber(),addVehicleReqDto.getOwnerName(),addVehicleReqDto.getContactNumber(),addVehicleReqDto.getEntryDate(),addVehicleReqDto.getEntryTime(),user);
+		return new Vehicle(addVehicleReqDto.getVehicleType(),addVehicleReqDto.getVehicleNumber(),addVehicleReqDto.getOwnerName(),addVehicleReqDto.getContactNumber(),addVehicleReqDto.getEntryDate(),addVehicleReqDto.getEntryTime(),users);
 		
 		
 	}

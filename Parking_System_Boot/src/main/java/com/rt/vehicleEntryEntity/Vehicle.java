@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import com.rt.signUpAndLoginEntity.User;
+import com.rt.userEntity.Users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,7 +50,7 @@ public class Vehicle {
 	 
 	 @ManyToOne
 	 @JoinColumn(name = "user_id", nullable = false)
-	 private User user; 
+	 private Users users; 
 	 
 	 @Column(name = "created_time", updatable = false)
 	    private LocalDateTime createdTime;
@@ -59,7 +59,7 @@ public class Vehicle {
 	    private LocalDateTime modifiedTime;
 	
 	 public Vehicle(String vehicleType, String vehicleNumber, String ownerName, String contactNumber,
-			LocalDate entryDate, LocalTime entryTime, User user) {
+			LocalDate entryDate, LocalTime entryTime, Users users) {
 		super();
 		this.vehicleType = vehicleType;
 		this.vehicleNumber = vehicleNumber;
@@ -67,11 +67,11 @@ public class Vehicle {
 		this.contactNumber = contactNumber;
 		this.entryDate = entryDate;
 		this.entryTime = entryTime;
-		this.user = user;
+		this.users = users;
 	}	
 	 
 	 public Vehicle(int id,String vehicleType, String vehicleNumber, String ownerName, String contactNumber,
-				LocalDate entryDate, LocalTime entryTime, User user) {
+				LocalDate entryDate, LocalTime entryTime, Users users) {
 			super();
 			this.id=id;
 			this.vehicleType = vehicleType;
@@ -80,7 +80,7 @@ public class Vehicle {
 			this.contactNumber = contactNumber;
 			this.entryDate = entryDate;
 			this.entryTime = entryTime;
-			this.user = user;
+			this.users = users;
 		}	
 	 
 	  @PrePersist

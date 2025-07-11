@@ -22,9 +22,9 @@ public interface EnteredVehicleRepository extends JpaRepository<Vehicle,Integer>
 	
 		
 		//this methods are used for other roles.
-	 	Page<Vehicle> findByVehicleTypeAndUserId(String vehicleType, int userId, Pageable pageable);
-	    Page<Vehicle> findByVehicleTypeAndVehicleNumberAndUserId(String vehicleType, String vehicleNumber, int userId, Pageable pageable);
-	    Page<Vehicle> findByVehicleTypeAndEntryDateAndUserId(String vehicleType, LocalDate entryDate, int userId, Pageable pageable);
+	 	Page<Vehicle> findByVehicleTypeAndUsers_Id(String vehicleType, int userId, Pageable pageable);
+	    Page<Vehicle> findByVehicleTypeAndVehicleNumberAndUsers_Id(String vehicleType, String vehicleNumber, int userId, Pageable pageable);
+	    Page<Vehicle> findByVehicleTypeAndEntryDateAndUsers_Id(String vehicleType, LocalDate entryDate, int userId, Pageable pageable);
 	
 	   
 	

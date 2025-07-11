@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.rt.signUpAndLoginEntity.User;
 import com.rt.signUpAndLoginRepository.LoginRepository;
+import com.rt.userEntity.Users;
 import com.rt.vehicleEntryDTO.UpdateVehicleInfoReqDto;
 import com.rt.vehicleEntryDTO.UpdateVehicleInfoRespDto;
 import com.rt.vehicleEntryEntity.Vehicle;
@@ -23,15 +23,15 @@ public class UpdateVehicleInfoMapper {
 	}
 	
 	public Vehicle toEntity(UpdateVehicleInfoReqDto UpdateVehicleInfoReqDto) {
-		User user=null;
-		Optional<User> userData = loginRepo.findById(UpdateVehicleInfoReqDto.getSessionUserId());
+		Users users=null;
+		Optional<Users> userData = loginRepo.findById(UpdateVehicleInfoReqDto.getSessionUserId());
 		
 		if(userData.isPresent()) {
-		 user=userData.get();
+		 users=userData.get();
 			
 		}
 		
-		return new Vehicle(UpdateVehicleInfoReqDto.getId(),UpdateVehicleInfoReqDto.getVehicleType(),UpdateVehicleInfoReqDto.getVehicleNumber(),UpdateVehicleInfoReqDto.getOwnerName(),UpdateVehicleInfoReqDto.getContactNumber(),UpdateVehicleInfoReqDto.getEntryDate(),UpdateVehicleInfoReqDto.getEntryTime(),user);
+		return new Vehicle(UpdateVehicleInfoReqDto.getId(),UpdateVehicleInfoReqDto.getVehicleType(),UpdateVehicleInfoReqDto.getVehicleNumber(),UpdateVehicleInfoReqDto.getOwnerName(),UpdateVehicleInfoReqDto.getContactNumber(),UpdateVehicleInfoReqDto.getEntryDate(),UpdateVehicleInfoReqDto.getEntryTime(),users);
 		
 		
 	}

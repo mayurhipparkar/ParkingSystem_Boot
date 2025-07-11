@@ -20,6 +20,8 @@ public class ResponseSignUpDTO {
 		  	
 	private String role;
 
+	private String status;
+
 	public ResponseSignUpDTO(String fullname, String email, String number, String address,String role) {
 		super();
 		this.fullname = fullname;
@@ -28,8 +30,16 @@ public class ResponseSignUpDTO {
 		this.address = address;
 		this.role = role;
 	}
-	
-	
-	
+
+	public ResponseSignUpDTO(int id,String fullname, String email,String address,String role,String status) {
+		super();
+		this.id = id;
+		this.fullname = fullname;
+		this.email = email;
+		this.address = address;
+		this.role = role;
+		this.status=status;
+	}
+
 
 }

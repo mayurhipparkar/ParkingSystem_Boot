@@ -15,15 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-@RequestMapping("/main")
+@RequestMapping("/users")
 public class SignUpAndLoginApiController {
 	//sign-up logic start.
 	@Autowired
 	private SignUpImplementation signUpService;
 	
-	@PostMapping("/signup")
+	@PostMapping("/register")
 	public String data(@RequestBody RequestSignUpDTO signUpDto) {
+		
 		String userStatus=signUpService.addUser(signUpDto);
+		
 		System.out.println(signUpDto.getFullname()+" "+signUpDto.getEmail()+" "+signUpDto.getNumber()+" "+signUpDto.getAddress()+" "+signUpDto.getPassword()+" "+signUpDto.getRole());
 		return userStatus;
 		
@@ -35,7 +37,7 @@ public class SignUpAndLoginApiController {
 	private LoginServiceImplementation loginService;
 	
 	@PostMapping("/login")
-	public ResponseLoginDTO checkLogin(@RequestBody RequestLoginDTO loginDto) {
+	public ResponseLoginDTO checkUserForLogin(@RequestBody RequestLoginDTO loginDto) {
 		ResponseLoginDTO userInfo=loginService.checkLogin(loginDto);
 		System.out.println(loginDto.getEmail()+" "+loginDto.getPassword());
 		

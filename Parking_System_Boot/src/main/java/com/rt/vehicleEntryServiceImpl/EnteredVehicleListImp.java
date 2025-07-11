@@ -30,15 +30,15 @@ public class EnteredVehicleListImp implements EnteredVehicleListInterface{
 	    if (search != null && !search.isEmpty()) {
 	        pagedResult = isAdmin
 	            ? enteredVehicleRepository.findByVehicleNumberAndVehicleType(vehicleType, search, pageable)
-	            : enteredVehicleRepository.findByVehicleTypeAndVehicleNumberAndUserId(vehicleType, search, userId, pageable);
+	            : enteredVehicleRepository.findByVehicleTypeAndVehicleNumberAndUsers_Id(vehicleType, search, userId, pageable);
 	    } else if (entryDate != null) {
 	        pagedResult = isAdmin
 	            ? enteredVehicleRepository.findByVehicleTypeAndEntryDate(vehicleType, entryDate, pageable)
-	            : enteredVehicleRepository.findByVehicleTypeAndEntryDateAndUserId(vehicleType, entryDate, userId, pageable);
+	            : enteredVehicleRepository.findByVehicleTypeAndEntryDateAndUsers_Id(vehicleType, entryDate, userId, pageable);
 	    } else {
 	        pagedResult = isAdmin
 	            ? enteredVehicleRepository.findByVehicleType(vehicleType, pageable)
-	            : enteredVehicleRepository.findByVehicleTypeAndUserId(vehicleType, userId, pageable);
+	            : enteredVehicleRepository.findByVehicleTypeAndUsers_Id(vehicleType, userId, pageable);
 	    }
 
 	    return pagedResult.map(vehicle -> new EnteredVehicleListRespDTO(
